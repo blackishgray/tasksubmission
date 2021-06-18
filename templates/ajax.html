@@ -1,0 +1,139 @@
+<script type="text/javascript">
+	$('#btnsubmitregister').click((e)=>{
+		let firstname = $('#firstname').val()
+		let lastname = $('#lastname').val()
+		let username = $('#username').val()	
+		let email = $('#useremail').val()
+		let password1 = $('#password1').val()
+		let csrftoken = $('input[name=csrfmiddlewaretoken]').val()
+
+
+		if(firstname==''|| lastname==''|| username=='' || email=="" || password1==''){
+			alert('Please Fill all the Fields')
+		} else{
+			registerdata={firstname:firstname, lastname:lastname,
+				username:username, email:email, password1:password1, csrfmiddleware:csrftoken}
+				$.ajax({
+					headers: {
+						'X-CSRFToken':csrftoken
+					},
+					url:"{% url 'app:register' %}",
+					type:"POST",
+					data:registerdata,
+					success:(data)=>{
+						if (data.status==1){
+							window.location.href = "{% url 'app:index' %}"
+						}else if(data.status==0){
+
+							$('#messages-heading').css({'display':'block'})
+							$('#messages-heading').text(data.messages)
+							console.log(data.messages)
+
+						}
+					}
+				})
+			}
+		})
+</script>
+
+<script type="text/javascript">
+	$('#btnsubmitlogin').click(()=>{
+			let username = $('#username').val()
+			let password = $('#password').val()
+			let csrftoken = $('input[name=csrfmiddlewaretoken]').val()
+
+			if(username=='' || password==''){
+				alert('Please fill all the details')
+			}else{
+				loginData = {username:username, password:password}
+
+				$.ajax({
+					headers: {
+						'X-CSRFToken':csrftoken
+					},
+					url:"{% url 'app:login' %}",
+					type:'POST',
+					data:loginData,
+					success:(data)=>{
+						if(data.status==1){
+							window.location.href="{% url 'app:incident' %}"
+						}else if(data.status==0){
+							$('#messages-heading').css({'display':'block'})
+							$('#messages-heading').text(data.messages)
+							console.log(data.messages)
+						}
+					},
+					fail:()=>{
+						console.log('Fail')
+						$('#messages-heading').css({'display':'block'})
+						$('#messages-heading').text(data.messages)
+					}
+
+				})
+			}
+
+		})
+</script>
+
+<script type="text/javascript">
+	$(()=>{
+	$('#submitform').click(()=>{
+
+		let location = $('#location').val()
+		let incident_des = $('#incident_des').val()
+		let incident_date = $('#incident_date').val()
+		let incident_time = $('#incident_time').val()
+		let incident_location = $('#incident_location').val()
+		let incident_severity = $('#incident_severity').val()
+		let suspected_cause = $('#suspected_cause').val()
+		let action_taken = $('#action_taken').val()
+		let list_of_subtype = []
+		let reported_by = $('#reported_by').val()
+		let csrfToken = $('input[name=csrfmiddlewaretoken]').val()
+
+		
+		$.each($("input[name='sub_incident_types']:checked"), function(){
+			list_of_subtype.push($(this).val());
+		});
+
+		list_of_subtype = list_of_subtype.toString()
+
+		mydata = {location:location, incident_des:incident_des, incident_date:incident_date,
+			incident_time:incident_time, incident_location:incident_location, incident_severity:incident_severity,
+			suspected_cause:suspected_cause, action_taken:action_taken, list_of_subtype:list_of_subtype,
+			reported_by:reported_by}
+
+
+			if(location=='' || incident_des=='' || incident_date=='' || incident_time==''||
+				incident_location=='' || incident_severity=='' || suspected_cause=="" || action_taken=='' || list_of_subtype=='' || reported_by==''){
+
+				alert('Please Fill All the information')
+
+		}else{
+			console.log(mydata)
+
+			$.ajax({
+				headers: {
+					'X-CSRFToken' : csrfToken
+				},
+				url : "{% url 'app:incidentprocess' %}",
+				type: 'POST',
+				data: mydata,
+				success:(data)=>{
+					console.log(data.Save)
+					$('#messages-heading').css({'display':'block'})
+					$('#messages-heading').text(data.message)
+				},
+				fail:()=>{
+					console.log('Fail')
+				}
+
+			})
+
+
+		}
+
+		
+	})
+})
+</script>

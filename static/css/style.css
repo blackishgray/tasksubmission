@@ -1,0 +1,57 @@
+body {
+	background-color: lightpink;
+}
+
+#btnsubmitregister{
+	margin-top: 1em;
+	float: right;
+}
+
+.row{
+	justify-content: center;
+}
+
+#password-para-cha{
+	display: none;
+}
+
+#password-para-no{
+	display: none;
+}
+
+#password-para-spl{
+	display: none;
+
+}
+
+#messages-heading{
+	display: none;
+}
+
+progress{
+	width: 215px;
+}
+
+.displayBadge{
+	margin-top: 5%; 
+	text-align :center;
+	width: 100%;
+	display: none;
+}
+
+#login-form{
+	justify-content: center;
+}
+
+#btnsubmitlogin{
+	margin-top: 1em;
+}
+
+label {
+	display: inline-flex;
+	text-align: right;
+}
+
+div{
+	margin : 10px
+}

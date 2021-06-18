@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+
+<html>
+<head>
+	{% block title %}<title>Incident Report</title>{% endblock %}
+</head>
+<body>
+	{% block content %}
+	{% if user.is_authenticated %}
+	<h3 class="alert alert-primary text-center">Welcome {{user.first_name}}!</h3>
+	<div class="container mt-5">
+		<div class="row flex">
+			<div class="col-md-8">
+				<h3 class="alert alert-info text-center">Incident Report</h3>
+				<h4 class="alert alert-success text-center" id="messages-heading"></h4>
+				<form method="POST" class="form-inline">
+					{% csrf_token %}
+					<!--  -->
+					<div class="form-group">
+						<div class="row">
+							<div class="col-sm-3">
+								<label for="location">*Location:</label>
+							</div>
+							<div class="col-sm-7">
+								<select id="location" class="form-control">
+									<option value="Coporate_Headoffice">Coporate Headoffice</option>
+									<option value="'Operation_Deparment">Operation Deparment</option>
+									<option value="Work_Station">Work Station</option>
+									<option value="Marketing_Division">Marketing Division</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<!--  -->
+					<div class="form-group ">
+						<div class="row">
+							<div class="col-sm-3">
+								<label for="incident_des">*Incident Description:</label>
+							</div>
+							<div class="col-sm-7">
+								<textarea class="form-control" cols="3" id="incident_des" name="incident_des"></textarea>
+							</div>
+						</div>
+					</div>
+					<!--  -->
+					<div class="form-group">
+						<div class="row">
+							<div class="col-sm-3">
+								<label for="date">*Incident Date:</label>
+							</div>
+							<div class="col-sm-7">
+								<input class="form-control" type="date" name="date" id='incident_date'>
+							</div>
+						</div>
+					</div>
+					<!--  -->
+					<div class="form-group">
+						<div class="row">
+							<div class="col-sm-3">
+								<label for="time">*Incident Time:</label>
+							</div>
+							<div class="col-sm-7">
+								<input class="form-control" type="time" name="incident_time"
+								id='incident_time'>
+							</div>
+						</div>
+						<!--  -->
+					</div>
+					<div class="form-group">
+						<div class="row">
+							<div class="col-sm-3">
+								<label for="incident_location">*Incident Location:</label>
+							</div>
+							<div class="col-sm-7">
+								<textarea class="form-control" cols="3" id="incident_location"></textarea>
+							</div>
+						</div>
+					</div>
+					<!--  -->
+					<div class="form-group">
+						<div class="row">
+							<div class="col-sm-3">
+								<label for="incident_severity">*Incident Severity:</label>
+							</div>
+							<div class="col-sm-7">
+								<select id="incident_severity" class="form-control">
+									<option value="moderate">Moderate</option>
+									<option value="serious">Serious</option>
+									<option value="mild">Mild</option>
+									<option value="fatal">Fatal</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<!--  -->
+					<div class="form-group">
+						<div class="row">
+							<div class="col-sm-3">
+								<label for="suspected_cause">*Suspected Cause:</label>
+
+							</div>
+							<div class="col-sm-7">
+								<textarea class="form-control" cols="3" id="suspected_cause"></textarea>
+
+							</div>
+						</div>
+					</div>
+					<!--  -->
+					<div class="form-group">
+						<div class="row">
+							<div class="col-sm-3">
+								<label for="action_taken">*Immediate Action Taken:</label>
+
+							</div>
+							<div class="col-sm-7">
+								<textarea class="form-control" cols="3" id="action_taken"></textarea>
+
+							</div>
+						</div>
+					</div>
+					<!--  -->
+					<div class="form-group">
+						<div class="row">
+							<div class="col-sm-3">
+								<label>*Sub type Incident:</label>
+							</div>
+							<div class="col-sm-7">
+								<div>
+									<input value="environmental_incident" type="checkbox" name="sub_incident_types">
+									<label>Environmental Incident</label>
+								</div>
+								<div>
+									<input value="injury_illness" type="checkbox" name="sub_incident_types">
+									<label>Injury Illness</label>
+								</div>
+								<div>
+									<input value="vehicle" type="checkbox" name="sub_incident_types">
+									<label>Vehicle</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--  -->
+					<div class="form-group">
+						<div class="row">
+							<div class="col-sm-3">
+								<label for="reported_by">*Reported By:</label>
+							</div>
+							<div class="col-sm-7">
+								<input class="form-control" type="text" id="reported_by" name="reported_by">
+
+							</div>
+						</div>
+					</div>
+					<!--  -->
+					<div class="text-center">
+						<input type="button" class="btn btn-primary" value="Submit" id="submitform" name="submit">
+					</div>
+				</form>
+				<h4><a href="{% url 'app:logout' %}">Logout</a></h4>
+			</div>
+		</div>
+	</div>
+	{%else%}
+	<h1><a href="{% url 'app:login' %}">Login</a></h1>
+	{%endif%}
+
+	{% endblock %}
+</body>
+</html>
